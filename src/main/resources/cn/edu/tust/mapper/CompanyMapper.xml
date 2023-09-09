@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.tust.mapper.CompanyMapper">
+    <insert id="insertCompanies" useGeneratedKeys="true" keyColumn="id">
+        insert into company(org_uni_code,
+        org_chi_name,
+        indu_sma_par,
+        org_dele,
+        reg_cap,
+        org_est_date)
+        values
+        <foreach collection="companies" item="company" separator=",">
+            (#{company.orgUniCode},
+            #{company.orgChiName},
+            #{company.induSmaPar},
+            #{company.orgDele},
+            #{company.regCap},
+            #{company.orgEstDate})
+        </foreach>
+    </insert>
+    <update id="updateById">
+        update company
+        <set>
+            <if test="orgUniCode != null">org_uni_code = #{orgUniCode},</if>
+            <if test="orgChiName != null">org_chi_name = #{orgChiName},</if>
+            <if test="induSmaPar != null">indu_sma_par = #{induSmaPar},</if>
+            <if test="orgDele != null">org_dele = #{orgDele},</if>
+            <if test="regCap != null">reg_cap = #{regCap},</if>
+            <if test="orgEstDate != null">org_est_date = #{orgEstDate},</if>
+        </set>
+        where id = #{id}
+    </update>
+    <delete id="deleteById">
+        delete
+        from company
+        where id = #{comId}
+    </delete>
+
+    <select id="getCompanies" resultType="Company">
+        select *
+        from company
+        order by org_est_date
+        <if test="isDesc">desc</if>;
+    </select>
+
+    <select id="getById" resultType="cn.edu.tust.pojo.entity.Company">
+        select *
+        from company
+        where id = #{comId}
+    </select>
+
+
+</mapper>
