@@ -34,7 +34,10 @@ public class FundServiceImpl implements FundService {
     private static BigDecimal earliestDay;
 
     @Override
-    public List<FundVO> getFundInfo(Integer pageNum, Integer pageSize, String sortField, String sortDirection) {
+    public List<FundVO> getFundInfo(Integer pageNum,
+                                    Integer pageSize,
+                                    String sortField,
+                                    String sortDirection) {
         List<Fund> fundList = mapper.getFundPageInfo(sortField, sortDirection);
 
         // 封装为map集合
@@ -72,6 +75,11 @@ public class FundServiceImpl implements FundService {
 
     }
 
+    /**
+     * 计算当前基金的每个时间段的盈亏情况
+     * @param item 需要计算的基金
+     * @return 封装好的数据
+     */
     private FundVO getFundInfoByDate(Fund item) {
         FundVO fundVO = new FundVO();
         BeanUtils.copyProperties(item, fundVO);
@@ -108,7 +116,10 @@ public class FundServiceImpl implements FundService {
         while (!fundHashMap.containsKey(endDate)){
             endDate = endDate.minus(1, ChronoUnit.DAYS);
         }
-        fundVO.setUntilToday(calculateFundHistory(fundHashMap.get(endDate).getUnitNetVal(), earliestDay));
+        fundVO.setUntilToday(
+                calculateFundHistory(
+                        fundHashMap.get(endDate).getUnitNetVal(),
+                        earliestDay));
 
         return fundVO;
     }
@@ -121,12 +132,22 @@ public class FundServiceImpl implements FundService {
      * @return 盈亏信息
      */
     private BigDecimal calculateFundHistory(LocalDate begin, LocalDate end) {
+        /*
+         * 此处可以进行优化,现有方法默认数据库中存有三年前的数据.
+         * 若数据库中没有存有该数据的话会陷入死循环,即会按照规则一直向前推算.
+         *
+         * 改进办法:在获取日期的时候进行边界判断,如向前推进10日仍旧获取不到
+         * 基金盈亏情况,则默认使用成立以来的数据.
+         */
+        // 推进当前时间
         while (!fundHashMap.containsKey(begin)) {
             begin = begin.minus(1, ChronoUnit.DAYS);
         }
+        // 推进先前时间
         while (!fundHashMap.containsKey(end)) {
             end = end.minus(1, ChronoUnit.DAYS);
         }
+
         Fund beginFund = fundHashMap.get(begin);
         Fund endFund = fundHashMap.get(end);
 

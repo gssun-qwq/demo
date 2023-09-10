@@ -7,7 +7,7 @@
     <select id="getEarliestDayFund" resultType="java.math.BigDecimal">
         select unit_net_val
         from fund
-        ORDER BY end_date ASC
+        ORDER BY end_date
         LIMIT 1
     </select>
 </mapper>

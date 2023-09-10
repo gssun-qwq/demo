@@ -36,7 +36,7 @@
         where id = #{comId}
     </delete>
 
-    <select id="getCompanies" resultType="Company">
+    <select id="getCompanies" resultType="cn.edu.tust.pojo.entity.Company">
         select *
         from company
         order by org_est_date
