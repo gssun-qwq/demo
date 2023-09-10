@@ -11,5 +11,4 @@
 
 ## 项目运行配置:
 1. 项目地址:https://github.com/gssun-qwq/demo.git
-2. 访问数据库应该需要配置ip地址为192.168.47.*网段,云数据库这部分不太熟练
-3. 使用的数据库文件为demo.sql,数据库相关配置在`src/main/resources/application.yml`文件中
+2. 使用的数据库文件为demo.sql,数据库相关配置在`src/main/resources/application.yml`文件中
