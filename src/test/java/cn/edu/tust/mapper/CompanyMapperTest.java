@@ -1,9 +1,11 @@
 package cn.edu.tust.mapper;
 
 import cn.edu.tust.pojo.entity.Company;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.util.Assert;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -38,21 +40,21 @@ class CompanyMapperTest {
 
     @Test
     void getById() {
-        Company company = mapper.getById(1);
+        Company company = mapper.getById(2);
         System.out.println(company);
     }
 
     @Test
     void updateById() {
         Company company = Company.builder()
-                .id(1)
-                .orgUniCode("1111")
+                .id(2)
+                .orgUniCode("2222")
                 .build();
-        mapper.updateById(company);
+        assert 1 == mapper.updateById(company);
     }
 
     @Test
     void deleteById() {
-        mapper.deleteById(1);
+        assert 1 == mapper.deleteById(2);
     }
 }

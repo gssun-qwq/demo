@@ -10,5 +10,7 @@ spring:
 
 mybatis:
   configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
   type-aliases-package: cn.edu.tust.pojo.entity
+

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.tust.mapper.FundMapper">
+    <select id="getFundPageInfo" resultType="cn.edu.tust.pojo.entity.Fund">
+        select * from fund order by #{sortField} #{sortDirection}
+    </select>
+    <select id="getEarliestDayFund" resultType="java.math.BigDecimal">
+        select unit_net_val
+        from fund
+        ORDER BY end_date ASC
+        LIMIT 1
+    </select>
+</mapper>

@@ -10,11 +10,11 @@ public interface CompanyMapper {
 
     List<Company> getCompanies(Boolean isDesc);
 
-    void insertCompanies(List<Company> companies);
+    int insertCompanies(List<Company> companies);
 
     Company getById(Integer comId);
 
-    void updateById(Company company);
+    int updateById(Company company);
 
-    void deleteById(Integer comId);
+    int deleteById(Integer comId);
 }
